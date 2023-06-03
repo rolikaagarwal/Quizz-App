@@ -14,10 +14,11 @@ body {
 }
 .options-category {
   /* background-color: #c31432; */
-  width: 300px;
+  width: 320px;
   height: 30px;
   border-radius: 10px;
   font-size: 18px;
   border: none;
   outline: none;
+  padding-left: 10px;
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 const Setting = () => {
   const [options, setOptions] = useState(null);
   const [selectCategory, setSelectCategory] = useState(" ");
+  const[difficulty, setDifficulty]= useState(" ");
   useEffect(() => {
     const apiUrl = "https://opentdb.com/api_category.php";
     fetch(apiUrl)
@@ -26,6 +27,14 @@ const Setting = () => {
                 {option.name}
               </option>
             ))}
+        </select>
+      </div>
+      <div className="category">
+        <h2>Difficulty Level</h2>
+        <select className="options-category" value={difficulty} onChange={(e)=> setDifficulty(e.target.value)}>
+            <option>Easy</option>
+            <option>Meduim</option>
+            <option>Hard</option>
         </select>
       </div>
     </>
