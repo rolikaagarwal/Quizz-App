@@ -17,3 +17,8 @@ https://github.com/rolikaagarwal/Quizz-App/assets/81984963/6fd90d64-cf0a-4a9c-a4
 - Learned how React actually works : 
   React is a JavaScript library for building user interfaces. It is based on the concept of components, which are small, reusable pieces of   code. This can make it easier to build complex user interfaces.
 
+## Future Scope/ Features that can be added
+
+- Top Performers List 
+- Users Profile
+- Score History / Performance history 
