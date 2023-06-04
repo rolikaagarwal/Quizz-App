@@ -12,7 +12,7 @@ function FetchButton(props) {
   const questionAmount = useSelector(
     (state) => state.options.amount_of_questions
   );
-//   const questionIndex = useSelector((state) => state.index);
+  const questionIndex = useSelector((state) => state.index);
   const setQuestions = (value) => {
     dispatch({
       type: "SET_QUESTIONS",
