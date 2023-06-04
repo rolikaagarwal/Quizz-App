@@ -1,74 +1,134 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import FetchButton from "./FetchButton";
 
-const Setting = () => {
+function Settings() {
   const [options, setOptions] = useState(null);
-  const questionCategory = useSelector(state => state.options.question_category);
-  const questionDifficulty = useSelector(state => state.options.question_difficulty);
-  const questionType = useSelector(state => state.options.question_type);
-  const questionAmount = useSelector(state => state.options.amount_of_questions);
+
+  const loading = useSelector((state) => state.options.loading);
+
+  const questionCategory = useSelector(
+    (state) => state.options.question_category
+  );
+  const questionDifficulty = useSelector(
+    (state) => state.options.question_difficulty
+  );
+  const questionType = useSelector((state) => state.options.question_type);
+  const questionAmount = useSelector(
+    (state) => state.options.amount_of_questions
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const apiUrl = "https://opentdb.com/api_category.php";
+    const apiUrl = `https://opentdb.com/api_category.php`;
+
+    const handleLoadingChange = (value) => {
+      dispatch({
+        type: "CHANGE_LOADING",
+        loading: value,
+      });
+    };
+
+    handleLoadingChange(true);
+
     fetch(apiUrl)
       .then((res) => res.json())
       .then((response) => {
+        handleLoadingChange(false);
         setOptions(response.trivia_categories);
       });
   }, [setOptions, dispatch]);
 
-  return (
-    <>
-      <div className="category">
-        <h2>Select Category</h2>
-        <select
-          className="options-category" value={questionCategory}
-          onChange={(e) => {dispatch({ type: 'CHANGE_CATEGORY', value: e.target.value })}}
-        >
-          <option>All</option>
-          {options &&
-            options.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.name}
-              </option>
-            ))}
-        </select>
-      </div>
-      <div className="category">
-        <h2>Difficulty Level</h2>
-        <select
-          className="options-category" value={questionDifficulty}
-          onChange={(e) => {dispatch({ type: 'CHANGE_DIFFICULTY', value: e.target.value })}}
-        >
-          <option>All</option>
-          <option>Easy</option>
-          <option>Medium</option>
-          <option>Hard</option>
-        </select>
-      </div>
-      <div className="category">
-        <h2>Question Type</h2>
-        <select
-          className="options-category" value={questionType}
-          onChange={(e) => {dispatch({ type: 'CHANGE_QUESTION_TYPE', value: e.target.value })}}
-        >
-          <option>All</option>
-          <option>Multiple Choice Question</option>
-          <option>True/False</option>
-        </select>
-      </div>
-      <div className="category">
-        <h2>Enter Number of Questions</h2>
-        <input
-          type="text"
-          className="options-category" value={questionAmount}
-          onChange={(e) => {dispatch({ type: 'CHANGE_NOOFQUESTIONS', value: e.target.value })}}
-        />
-      </div>
-    </>
-  );
-};
+  const handleCategoryChange = (event) => {
+    dispatch({
+      type: "CHANGE_CATEGORY",
+      question_category: event.target.value,
+    });
+  };
 
-export default Setting;
+  const handleDifficultyChange = (event) => {
+    dispatch({
+      type: "CHANGE_DIFFICULTY",
+      question_difficulty: event.target.value,
+    });
+  };
+
+  const handleTypeChange = (event) => {
+    dispatch({
+      type: "CHANGE_TYPE",
+      question_type: event.target.value,
+    });
+  };
+
+  const handleAmountChange = (event) => {
+    dispatch({
+      type: "CHANGE_AMOUNT",
+      amount_of_questions: event.target.value,
+    });
+  };
+
+  if (!loading) {
+    return (
+      <div>
+        <h1>Quiz App</h1>
+        <div>
+          <h2>Select Category:</h2>
+          <select value={questionCategory} onChange={handleCategoryChange}>
+            <option>All</option>
+            {options &&
+              options.length &&
+              options.map((option) => (
+                <option value={option.id} key={option.id}>
+                  {option.name}
+                </option>
+              ))}
+          </select>
+        </div>
+
+        <div>
+          <h2>Select Difficulty:</h2>
+          <select value={questionDifficulty} onChange={handleDifficultyChange}>
+            <option value="" key="difficulty-0">
+              All
+            </option>
+            <option value="easy" key="difficulty-1">
+              Easy
+            </option>
+            <option value="medium" key="difficulty-2">
+              Medium
+            </option>
+            <option value="hard" key="difficulty-3">
+              Hard
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <h2>Select Question Type:</h2>
+          <select value={questionType} onChange={handleTypeChange}>
+            <option value="" key="type-0">
+              All
+            </option>
+            <option value="multiple" key="type-1">
+              Multiple Choice
+            </option>
+            <option value="boolean" key="type-2">
+              True/False
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <h2>Amount of Questions:</h2>
+          <input value={questionAmount} onChange={handleAmountChange} />
+        </div>
+
+        <FetchButton text="Get started!" />
+      </div>
+    );
+  }
+
+  return <p>LOADING...</p>;
+}
+export default Settings;
