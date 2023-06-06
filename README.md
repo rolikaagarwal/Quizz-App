@@ -7,7 +7,7 @@
 https://github.com/rolikaagarwal/Quizz-App/assets/81984963/6fd90d64-cf0a-4a9c-a440-af351f94401f
 
 
-## What I learned - 
+## What I learned 
 - Learned Redux: 
   Redux is a state management library for JavaScript. It helps in keeping track of the state of the application in a centralized way. This   can be helpful for large applications with complex state.
 
